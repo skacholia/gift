@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="shortcut icon" href="img/paint.ico" type="image/x-icon">
+    <link rel="icon" href="img/paint.ico" type="image/x-icon">    
+    <meta charset="UTF-8">
+    <title>art art art</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+            margin-top: 100px;
+            background: #fff;
+            user-select: none;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        canvas {
+            border: 1px solid;
+            margin-top: 20px;
+        }
+        button {
+            background: none;
+            border: none;
+            color: black;
+            text-decoration: underline;
+            cursor: pointer;
+            font-family: 'Courier New', Courier, monospace;
+        }
+        a {
+            color: black;
+        }
+        button:hover {
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <p> make some random art and if u like it <br>u could send it to me and if u rly like u could <br>submit for inclusion  in treehouse zine ok have fun <br>
+    <br><a href="end.html">ok done next &#8594;</a></p>
+    <div>
+        <button onclick="clearGrid()">Clear</button>
+        <button onclick="takeScreenshot()">Screenshot</button>
+    </div>
+    <script>
+        const gridSize = 10;
+        let grid = [];
+        let cellSize;
+
+        function setup() {
+            createCanvas(400, 400);
+            cellSize = width / gridSize;
+            for (let i = 0; i < gridSize; i++) {
+                grid[i] = [];
+                for (let j = 0; j < gridSize; j++) {
+                    grid[i][j] = color(255);
+                }
+            }
+        }
+
+        function draw() {
+            background(220);
+            drawGrid();
+        }
+
+        function drawGrid() {
+            for (let i = 0; i < gridSize; i++) {
+                for (let j = 0; j < gridSize; j++) {
+                    fill(grid[j][i]);
+                    rect(i * cellSize, j * cellSize, cellSize, cellSize);
+                }
+            }
+        }
+
+        function mousePressed() {
+            let col = floor(mouseX / cellSize);
+            let row = floor(mouseY / cellSize);
+
+            let r = random(255);
+            let g = random(255);
+            let b = random(255);
+
+            grid[row][col] = color(r, g, b);
+        }
+
+        function clearGrid() {
+            setup();
+        }
+
+
+        function takeScreenshot() {
+            saveCanvas('yay', 'png');
+        }
+    </script>
+</body>
+</html>

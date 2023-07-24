@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="shortcut icon" href="img/heart.ico" type="image/x-icon">
+    <link rel="icon" href="img/heart.ico" type="image/x-icon">    
+    <title>hi</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background-color: pink;
+            font-family: 'Courier New', monospace;
+        }
+
+        #center-div {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(255, 255, 255, 0.5); /* white with 50% opacity */
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            font-size: 24px;
+        }
+
+        .popup-trigger {
+            cursor: pointer;
+            color: blue;  /* or any other styling you prefer */
+        }
+
+        #popup {
+            position: absolute;
+            border: 1px solid #333;
+            background-color: #fff;
+            padding: 5px;
+            max-width: 200px;
+            z-index: 1000;  /* to ensure it's above other elements */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+        const popup = document.getElementById("popup");
+        const popupContent = document.getElementById("popup-content");
+        const popupImage = document.getElementById("popup-image");
+
+        document.body.addEventListener("mouseenter", function(event) {
+            if (!event.target.classList.contains("popup-trigger")) return;
+
+            const content = event.target.getAttribute("data-popup-content");
+            const imageSrc = event.target.getAttribute("data-popup-image");
+
+            popupContent.innerHTML = content; // Use innerHTML to embed the nested popup content
+
+            if (imageSrc) {
+                popupImage.src = imageSrc;
+                popupImage.style.display = "block";
+            } else {
+                popupImage.style.display = "none";
+            }
+
+            // Position the popup
+            popup.style.left = (event.pageX + 10) + "px";
+            popup.style.top = (event.pageY + 10) + "px";
+
+            // Show the popup
+            popup.style.display = "block";
+
+        }, true); // Use event capturing phase to handle nested popups
+
+        document.body.addEventListener("mouseleave", function(event) {
+            if (event.target.classList.contains("popup-trigger")) {
+                // Hide the popup
+                popup.style.display = "none";
+            }
+        }, true); // Use event capturing phase to handle nested popups
+    });
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
+</head>
+<body>
+    <div id="center-div">
+        as you know web design is now my passion.<br>
+        as such i'd like to use my newfound skills
+        <sup class="popup-trigger" data-popup-content="(that skill being Prompt Engineering&trade;)">1</sup> 
+        for something good <sup class="popup-trigger" data-popup-image="img/codingitforward.png">2</sup><br>
+        so i made you a website <sup class="popup-trigger" data-popup-content="or two.. or three..">3</sup><br><br>
+        <a href="livecoding.html" >so.. shall we get this party started?</a><br><br>
+        p.s. gpt made the hearts a lil fucked up <br>but i kinda like them so i kept them 
+    </div>
+    <div id="popup" style="display: none;">
+        <img id="popup-image" src="" alt="Popup image" style="max-width: 100px; display: none;">
+        <div id="popup-content"></div>
+    </div>
+    <script>
+        // p5.js sketch
+        function sketch(p) {
+            let hearts = [];
+
+            p.setup = function () {
+                const canvas = p.createCanvas(window.innerWidth, window.innerHeight);
+                canvas.style('display', 'block');
+
+                // Create initial hearts
+                for (let i = 0; i < 100; i++) {
+                    hearts.push(new Heart());
+                }
+            };
+
+            p.draw = function () {
+                p.clear();
+
+                // Update and display hearts
+                hearts.forEach(heart => {
+                    heart.update();
+                    heart.display();
+                });
+            };
+
+            // Heart class
+            class Heart {
+                constructor() {
+                    this.x = p.random(p.width);
+                    this.y = p.random(p.height);
+                    this.size = p.random(20, 50);
+                    this.speed = p.random(1, 3);
+                }
+
+                update() {
+                    // Move the heart
+                    this.y += this.speed;
+
+                    // Reset if it goes off-screen
+                    if (this.y > p.height + this.size) {
+                        this.x = p.random(p.width);
+                        this.y = -this.size;
+                    }
+                }
+
+                display() {
+                    // Draw the heart
+                    p.fill('#ff3b6f');
+                    p.noStroke();
+                    p.beginShape();
+                    p.vertex(this.x, this.y + this.size / 4);
+                    p.bezierVertex(this.x, this.y - this.size / 2, this.x + this.size / 2, this.y - this.size / 2, this.x + this.size / 2, this.y + this.size / 4);
+                    p.bezierVertex(this.x + this.size / 2, this.y + this.size / 2, this.x, this.y + this.size, this.x - this.size / 2, this.y + this.size / 4);
+                    p.bezierVertex(this.x - this.size / 2, this.y - this.size / 2, this.x, this.y - this.size / 2, this.x, this.y + this.size / 4);
+                    p.endShape(p.CLOSE);
+                }
+            }
+        }
+
+        // Create a new p5.js instance using the sketch
+        new p5(sketch);
+    </script>
+</body>
+</html>

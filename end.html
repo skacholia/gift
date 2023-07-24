@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>thx</title>
+    <style>
+        body {
+            background: linear-gradient(45deg, #f06, #9f6);
+            font-family: 'Arial', sans-serif;
+            height: 100vh;
+            overflow: hidden;
+            margin: 0;
+        }
+
+        #animation-container {
+            position: relative;
+            height: 800px;
+            width: 1600px;
+            margin: 0 auto; /* center container */
+        }
+
+        img {  
+            max-width: 100%;  
+            height: auto;  
+        }  
+
+        #california, #dc {
+            position: absolute;
+            height: 25%;
+            width: 25%;
+            animation: rotateSVG 10s infinite linear; /* rotation */
+        }
+
+        #california {
+            left: 0;
+            top: 37.5%; /* center vertically */
+            transform: translate(0%, -50%);
+        }
+
+        #dc {
+            right: 0;
+            bottom: 37.5%; /* center vertically */
+            transform: translate(0%, 50%) rotate(0deg);
+            overflow: hidden;
+        }
+
+        #heart {
+            position: absolute;
+            height: 50%;
+            width: 50%;
+            /* initially position the heart in the middle */
+            left: 50%;
+            top: 50%;
+            animation: moveHeart 5s ease-in-out infinite alternate;
+        }
+
+        @keyframes moveHeart {
+            0% {
+                left: 15%; /* start from left */
+            }
+            50% {
+                left: 75%; /* move to right */
+            }
+            100% {
+                left: 25%; /* move back to left */
+            }
+        }
+
+        @keyframes rotateSVG {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        #central-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 4rem;
+            color: white;
+            font-weight: bold;
+            z-index: 1;
+        }
+    </style>
+</head>
+<body>
+    <div id="animation-container">
+        <div id="central-text">hope u enjoyed<br> i miss you <3</div>
+        <div id="california">
+            <img src="img/california.svg" alt="California SVG">
+        </div>
+        <div id="heart">
+            <img src="img/heart.svg" alt="Heart SVG">
+        </div>
+        <div id="dc">
+            <img src="img/capitol.png" alt="Capitol png">
+        </div>
+    </div>
+</body>
+</html>
